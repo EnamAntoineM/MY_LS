@@ -7,6 +7,8 @@
 ** File description:
 */
 
+#include "../include/my.h"
+
 int main(int argc, char **argv)
 {
     bool all = false;

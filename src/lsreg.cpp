@@ -7,6 +7,7 @@
 ** File description:
 */
 
+#include "../include/my.h"
 
 void printspace(std::vector<std::string> indir, int see)
 {

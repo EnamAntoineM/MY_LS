@@ -7,6 +7,7 @@
 ** File description:
 */
 
+#include "../include/my.h"
 
 void reverse(std::vector<std::string>& array)
 {

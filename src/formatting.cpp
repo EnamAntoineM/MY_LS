@@ -7,6 +7,7 @@
 ** File description:
 */
 
+#include "../include/my.h"
 
 //Get terminal characters width
 int tcharwidth(void)

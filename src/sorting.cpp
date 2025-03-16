@@ -7,6 +7,7 @@
 ** File description:
 */
 
+#include "../include/my.h"
 
 // 1. Function to convert a string to lowercase
 std::string toLower(const std::string& str)
