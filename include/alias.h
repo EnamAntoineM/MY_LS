@@ -1,10 +1,10 @@
 /*
-** EPITECH PROJECT, 2024
-** FIRST_PROG
-** File description:
-** alias.h
-*/
-
+ * * MY_PROJECT (IDEA FROM EPITECH)
+ * * File: alias.h
+ * * Author: Enam KODJOH-KPAKPASSOU
+ * * Email: eakodjoh-kpakpassou.st.ug.edu.gh
+ * * Description: 
+ */
 
 #ifndef MY_ALIAS
     #define MY_ALIAS

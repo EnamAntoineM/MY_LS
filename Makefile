@@ -1,8 +1,9 @@
 ##
-## EPITECH PROJECT, 2024
-## Makefile
-## File description:
-## Makefile
+## MY_PROJECT (IDEA FROM EPITECH)
+## File: Makefile
+## Author: Enam KODJOH-KPAKPASSOU
+## Email: eakodjoh-kpakpassou.st.ug.edu.gh
+## Description: 
 ##
 
 # Variables

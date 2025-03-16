@@ -1,9 +1,10 @@
 /*
-** EPITECH PROJECT, 2024
-** MY_LS
-** File description:
-** lsreg.cpp
-*/
+ * * MY_PROJECT (IDEA FROM EPITECH)
+ * * File: lsreg.cpp
+ * * Author: Enam KODJOH-KPAKPASSOU
+ * * Email: eakodjoh-kpakpassou.st.ug.edu.gh
+ * * Description: 
+ */
 
 #include "../include/my.h"
 

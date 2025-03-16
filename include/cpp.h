@@ -1,9 +1,10 @@
 /*
-** EPITECH PROJECT, 2024
-** FIRST_PROG
-** File description:
-** cpp.h
-*/
+ * * MY_PROJECT (IDEA FROM EPITECH)
+ * * File: cpp.h
+ * * Author: Enam KODJOH-KPAKPASSOU
+ * * Email: eakodjoh-kpakpassou.st.ug.edu.gh
+ * * Description: 
+ */
 
 #ifndef MY_CPP
     #define MY_CPP

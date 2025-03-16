@@ -1,9 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
-** MY_LS
-** File description:
-** main.cpp
-*/
+ * * MY_PROJECT (IDEA FROM EPITECH)
+ * * File: main.cpp
+ * * Author: Enam KODJOH-KPAKPASSOU
+ * * Email: eakodjoh-kpakpassou.st.ug.edu.gh
+ * * Description: 
+ */
+
 
 #include "../include/my.h"
 
