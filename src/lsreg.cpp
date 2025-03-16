@@ -48,6 +48,7 @@ void my_ls(void)
     DIR *r = NULL;
     const char *here = ".";
     std::vector<std::string> content;
+    std::vector<std::string> lflag;
 
     r = opendir(here);
     if(r == NULL){fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");}
@@ -57,7 +58,11 @@ void my_ls(void)
         rep = readdir(r);
     }
     closedir(r);
-    regsort(content);
-    reverse(content);
-    display(content);
+    lflag = info(content);
+    for (size_t i = 0; i < lflag.size(); i++) {
+        cout << lflag[i] << endl;
+    }
+    //regsort(content);
+    //reverse(content);
+    //display(content);
 }

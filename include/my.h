@@ -17,4 +17,5 @@
     int step(std::vector<std::string> astring);
     void regsort(std::vector<std::string>& files);
     void reverse(std::vector<std::string>& array);
+    std::vector<std::string> info(std::vector<std::string> indir);
 #endif
