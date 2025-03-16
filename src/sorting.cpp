@@ -1,13 +1,12 @@
 /*
- * * MY_PROJECT (IDEA FROM EPITECH)
- * * File: sorting.cpp
- * * MY_LS
- * * Author: Enam KODJOH-KPAKPASSOU
- * * Email: eakodjoh-kpakpassou.st.ug.edu.gh
- * * Description: 
- */
+** MY_PROJECT (IDEA FROM EPITECH), 2025
+** sorting.cpp
+** MY_LS
+** Author: Enam KODJOH-KPAKPASSOU
+** Email: eakodjoh-kpakpassou@st.ug.edu.gh
+** File description:
+*/
 
-#include "../include/my.h"
 
 // 1. Function to convert a string to lowercase
 std::string toLower(const std::string& str)

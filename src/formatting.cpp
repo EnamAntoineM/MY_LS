@@ -1,13 +1,12 @@
 /*
- * * MY_PROJECT (IDEA FROM EPITECH)
- * * File: formatting.cpp
- * * MY_LS
- * * Author: Enam KODJOH-KPAKPASSOU
- * * Email: eakodjoh-kpakpassou.st.ug.edu.gh
- * * Description: 
- */
+** MY_PROJECT (IDEA FROM EPITECH), 2025
+** formatting.cpp
+** MY_LS
+** Author: Enam KODJOH-KPAKPASSOU
+** Email: eakodjoh-kpakpassou@st.ug.edu.gh
+** File description:
+*/
 
-#include "../include/my.h"
 
 //Get terminal characters width
 int tcharwidth(void)

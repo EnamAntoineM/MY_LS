@@ -1,13 +1,12 @@
 /*
- * * MY_PROJECT (IDEA FROM EPITECH)
- * * File: reverse_sort.cpp
- * * MY_LS
- * * Author: Enam KODJOH-KPAKPASSOU
- * * Email: eakodjoh-kpakpassou.st.ug.edu.gh
- * * Description: 
- */
+** MY_PROJECT (IDEA FROM EPITECH), 2025
+** reverse_sort.cpp
+** MY_LS
+** Author: Enam KODJOH-KPAKPASSOU
+** Email: eakodjoh-kpakpassou@st.ug.edu.gh
+** File description:
+*/
 
-#include "../include/my.h"
 
 void reverse(std::vector<std::string>& array)
 {

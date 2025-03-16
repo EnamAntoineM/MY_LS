@@ -1,13 +1,12 @@
 /*
- * * MY_PROJECT (IDEA FROM EPITECH)
- * * File: lsreg.cpp
- * * MY_LS
- * * Author: Enam KODJOH-KPAKPASSOU
- * * Email: eakodjoh-kpakpassou.st.ug.edu.gh
- * * Description: 
- */
+** MY_PROJECT (IDEA FROM EPITECH), 2025
+** lsreg.cpp
+** MY_LS
+** Author: Enam KODJOH-KPAKPASSOU
+** Email: eakodjoh-kpakpassou@st.ug.edu.gh
+** File description:
+*/
 
-#include "../include/my.h"
 
 void printspace(std::vector<std::string> indir, int see)
 {

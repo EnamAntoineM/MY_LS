@@ -1,13 +1,11 @@
 /*
- * * MY_PROJECT (IDEA FROM EPITECH)
- * * File: main.cpp
- * * MY_LS
- * * Author: Enam KODJOH-KPAKPASSOU
- * * Email: eakodjoh-kpakpassou.st.ug.edu.gh
- * * Description: 
- */
-
-#include "../include/my.h"
+** MY_PROJECT (IDEA FROM EPITECH), 2025
+** main.cpp
+** MY_LS
+** Author: Enam KODJOH-KPAKPASSOU
+** Email: eakodjoh-kpakpassou@st.ug.edu.gh
+** File description:
+*/
 
 int main(int argc, char **argv)
 {
