@@ -1,6 +1,7 @@
 /*
  * * MY_PROJECT (IDEA FROM EPITECH)
  * * File: alias.h
+ * * MY_LS
  * * Author: Enam KODJOH-KPAKPASSOU
  * * Email: eakodjoh-kpakpassou.st.ug.edu.gh
  * * Description: 

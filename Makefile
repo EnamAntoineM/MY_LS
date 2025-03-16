@@ -1,10 +1,9 @@
-##
-## MY_PROJECT (IDEA FROM EPITECH)
-## File: Makefile
-## Author: Enam KODJOH-KPAKPASSOU
-## Email: eakodjoh-kpakpassou.st.ug.edu.gh
-## Description: 
-##
+# MY_PROJECT (IDEA FROM EPITECH)
+# File: Makefile
+# MY_LS
+# Author: Enam KODJOH-KPAKPASSOU
+# Email: eakodjoh-kpakpassou.st.ug.edu.gh
+# Description: 
 
 # Variables
 SRC     = $(wildcard *.cpp) $(shell find ./src -name '*.cpp')  # Source files in root and ./src

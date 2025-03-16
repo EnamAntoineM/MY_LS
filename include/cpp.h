@@ -1,6 +1,7 @@
 /*
  * * MY_PROJECT (IDEA FROM EPITECH)
  * * File: cpp.h
+ * * MY_LS
  * * Author: Enam KODJOH-KPAKPASSOU
  * * Email: eakodjoh-kpakpassou.st.ug.edu.gh
  * * Description: 
@@ -42,4 +43,4 @@
     #include <cstdio>        // For std::perror, std::strerror
     #include <sys/ioctl.h> 
     #include "cctype"
-#
+#endif
