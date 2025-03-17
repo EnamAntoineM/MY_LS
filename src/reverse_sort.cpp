@@ -15,8 +15,7 @@ void reverse(std::vector<std::string>& array)
     size_t re = array.size() - 1;
     int i = 0;
 
-    for(size_t j = re; j != 0; j--){
-        printf("%zu ---- %d \n", j, i);
+    for(size_t j = re; j != (re -re - 1); j--){
         cout << decoy[j] << endl;
         array[i] = decoy[j];
         i++;

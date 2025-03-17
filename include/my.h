@@ -18,4 +18,5 @@
     void regsort(std::vector<std::string>& files);
     void reverse(std::vector<std::string>& array);
     std::vector<std::string> info(std::vector<std::string> indir);
+    std::vector<std::string> stime(std::vector<std::string>& files);
 #endif

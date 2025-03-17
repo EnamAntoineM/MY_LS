@@ -58,9 +58,11 @@ void my_ls(void)
         rep = readdir(r);
     }
     closedir(r);
-    lflag = info(content);
-    for (size_t i = 0; i < lflag.size(); i++) {
-        cout << lflag[i] << endl;
+    //lflag = info(content);
+    stime(content);
+    //reverse(content);
+    for (size_t i = 0; i < content.size(); i++) {
+        cout << content[i] << endl;
     }
     //regsort(content);
     //reverse(content);
