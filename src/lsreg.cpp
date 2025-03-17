@@ -42,17 +42,35 @@ void display(std::vector<std::string> indir)
     }
 }
 
+std::vector<std::string> get_dir_content(std::string parameter)
+{
+    struct dirent *rep = NULL;
+    DIR *r = NULL;
+    std::vector<std::string> content;
+
+    r = opendir(parameter.c_str());
+    if(r == NULL){
+        fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");
+    }
+    rep = readdir(r);
+    while(rep != NULL){
+        content.emplace_back(rep->d_name);
+        rep = readdir(r);
+    }
+    closedir(r);
+    regsort(content);
+    return content;
+}
+
 void my_ls(std::vector<std::string> parameter)
 {
     struct dirent *rep = NULL;
     DIR *r = NULL;
-    const char *here = ".";
     std::vector<std::string> content;
     std::vector<std::string> lflag;
 
     for (size_t i = 0; i < parameter.size(); i++)
     {
-        printf("hey\n");
         r = opendir(parameter[i].c_str());
         if(r == NULL){fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");}
         rep = readdir(r);
@@ -63,7 +81,6 @@ void my_ls(std::vector<std::string> parameter)
         closedir(r);
         regsort(content);
         content = recursive(content, parameter, i);
-        content = info(content);
         for (size_t i = 0; i < content.size(); i++) {
             cout << content[i] << endl;
         }

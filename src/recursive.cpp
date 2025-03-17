@@ -9,11 +9,23 @@
 
 #include "../include/my.h"
 
-std::vector<std::string> append_path(std::vector<std::string> file, std::vector<std::string> path, int i)
+std::vector<std::string> get_dir(std::vector<std::string> file, std::vector<std::string> path, int i)
 {
+    struct stat utility;
+
     for (std::string& in_array : file) {
         in_array.insert(0, path[i] + "/");
     }
+    for (size_t j = 0; j < file.size();) {
+        lstat(file[j].c_str(), &utility);
+        if (!S_ISDIR(utility.st_mode)) {
+            file.erase(file.begin() + j); //the erase method requires an iterator.
+            //file.begin() points at the beginning of the array and + i specifies the elemnt that has to be deleted.
+        } else {
+            j++;
+        }
+    }
+
     return file;
 }
 
@@ -22,16 +34,7 @@ std::vector<std::string> recursive(std::vector<std::string> filelist, std::vecto
     struct stat utility;
     struct dirent *rep = NULL;
     DIR *r = NULL;
-    std::vector<std::string> directories = append_path(filelist, path, i);
+    std::vector<std::string> directories = get_dir(filelist, path, i);
 
-    for (size_t i = 0; i < directories.size();) {
-        lstat(directories[i].c_str(), &utility);
-        if (!S_ISDIR(utility.st_mode)) {
-            directories.erase(directories.begin() + i); //the erase method requires an iterator.
-            //Directories.begin() points at the beginning of the array and + i specifies the elemnt that has to be deleted.
-        } else {
-            i++;
-        }
-    }
     return directories;
 }

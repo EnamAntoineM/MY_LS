@@ -78,7 +78,9 @@ std::vector<std::string> info(std::vector<std::string> indir)
 
     for(size_t i = 0; i < indir.size(); i++) {
         lstat(indir[i].c_str(), &file);
-        if(lstat(indir[i].c_str(), &file) == -1){fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");}
+        if(lstat(indir[i].c_str(), &file) == -1){
+            fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");
+        }
         informations = ftype(indir, file, i);
         informations = fpermissions(indir, file, i);
         informations = others(indir, file, i);
