@@ -11,10 +11,15 @@
 
 int main(int argc, char **argv)
 {
+    std::vector<std::string> parameter;
     bool all = false;
     if(argc = 1){
+        parameter = {"."};
         cout << "Hey my_ls is working bro" << endl;
         my_ls();
+    }
+    else{
+        parameter = std::vector<std::string>(argv + 1, argv + argc); //skipping the first element of argv which is the program name
     }
     return 0;
 }

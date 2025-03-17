@@ -19,4 +19,5 @@
     void reverse(std::vector<std::string>& array);
     std::vector<std::string> info(std::vector<std::string> indir);
     std::vector<std::string> stime(std::vector<std::string>& files);
+    void display(std::vector<std::string> indir);
 #endif
