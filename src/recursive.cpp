@@ -66,25 +66,27 @@ void get_dir_content(std::string parameter)
 
     std::cout << endl << parameter << endl;
     r = opendir(parameter.c_str());
+    std::cout << endl << parameter << endl;
     if(r == NULL){
-        fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");
-    }
-    rep = readdir(r);
-    while(rep != NULL){
-        content.emplace_back(rep->d_name);
+        fprintf(stderr, "my_ls : Cannot access: No such file or directory,\n");
+    } else {
         rep = readdir(r);
-    }
-    closedir(r);
-    regsort(content);
-    display(content);
-    cout << endl;
-    lcontinue = get_dir2(content, parameter);
-    if (!lcontinue.empty()) {
-        for (size_t i = 0; i < lcontinue.size(); i++) {
-            if (lcontinue[i].find(".") != std::string::npos || lcontinue[i].find("..") != std::string::npos) {
-                continue;
-            } else {
-                get_dir_content(lcontinue[i]); 
+        while(rep != NULL){
+            content.emplace_back(rep->d_name);
+            rep = readdir(r);
+        }
+        closedir(r);
+        regsort(content);
+        display(content);
+        cout << endl;
+        lcontinue = get_dir2(content, parameter);
+        if (!lcontinue.empty()) {
+            for (size_t i = 0; i < lcontinue.size(); i++) {
+                if (lcontinue[i].find(".") != std::string::npos || lcontinue[i].find("..") != std::string::npos) {
+                    continue;
+                } else {
+                    get_dir_content(lcontinue[i]); 
+                }
             }
         }
     }
@@ -97,6 +99,7 @@ void recursive(std::vector<std::string> filelist, std::vector<std::string> path,
     DIR *r = NULL;
     std::vector<std::string> directories = get_dir1(filelist, path, i);
 
+    regsort(directories);
     cout << endl;
     if (!directories.empty()) {
         for (size_t j = 0; j < directories.size(); j++) {

@@ -36,17 +36,18 @@ void maxi(std::vector<int>& list, int size)
 int longstring(std::vector<std::string> content)
 {
     int size = content.size();
+    if (size == 0) return 3;
     std::vector<int> array(size, 0);
-    int longest = 0;
 
-    for(int i = 0; i < size; i++){
-        array[i] = content[i].size();
+    for (int i = 0; i < size; i++) {
+        if (!content[i].empty()) {
+            array[i] = content[i].size();
+        }
     }
-    for(int j = 0; j < size; j++){
+    for (int j = 0; j < size - 1; j++) {
         maxi(array, size);
     }
-    longest = array[0];
-    return longest + 3;
+    return array[0] + 3;
 }
 
 int step(std::vector<std::string> astring)

@@ -26,17 +26,19 @@ void display(std::vector<std::string> indir)
     size_t see = 0;
     int format = 0;
 
-    for(size_t i = 0; i < indir.size(); i++){
-        if(indir[i][0] != '.'){
-            if(format != limit){
-                see = control - indir[i].size() + 2;
-                cout << indir[i];
-                printspace(indir, see);
-                format++;
-            }
-            else {
-                format = 0;
-                cout << endl;
+    if (!indir.empty()) {
+        for(size_t i = 0; i < indir.size(); i++){
+            if(indir[i][0] != '.'){
+                if(format != limit){
+                    see = control - indir[i].size() + 2;
+                    cout << indir[i];
+                    printspace(indir, see);
+                    format++;
+                }
+                else {
+                    format = 0;
+                    cout << endl;
+                }
             }
         }
     }
@@ -46,23 +48,31 @@ void my_ls(std::vector<std::string> parameter)
 {
     struct dirent *rep = NULL;
     DIR *r = NULL;
+    struct stat type;
     std::vector<std::string> content;
     std::vector<std::string> lflag;
 
     for (size_t i = 0; i < parameter.size(); i++)
     {
-        r = opendir(parameter[i].c_str());
-        if(r == NULL){fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");}
-        rep = readdir(r);
-        while(rep != NULL){
-            content.emplace_back(rep->d_name);
+        if(lstat(parameter[i].c_str(), &type) != -1 && !S_ISDIR(type.st_mode)) {
+            printf("hey\n");
+            cout << endl << parameter[i] << endl;
+        } else {
+            r = opendir(parameter[i].c_str());
+            if(r == NULL){
+                printf("hey\n");
+                fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");}
             rep = readdir(r);
+            while(rep != NULL){
+                content.emplace_back(rep->d_name);
+                rep = readdir(r);
+            }
+            closedir(r);
+            regsort(content);
+            display(content);
+            recursive(content, parameter, i);
+            content.clear();
         }
-        closedir(r);
-        regsort(content);
-        display(content);
-        recursive(content, parameter, i);
-        content.clear();
     }
     //lflag = info(content);
     //stime(content);

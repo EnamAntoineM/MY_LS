@@ -9,7 +9,7 @@
 SRC     = $(wildcard *.cpp) $(shell find ./src -name '*.cpp')  # Source files in root and ./src
 OBJ     = $(SRC:.cpp=.o)                                     # Object files (updated extension from .c to .cpp)
 NAME    = my_ls                                           # Executable name
-CC      = g++                                                # Compiler (changed from clang to g++)
+CC      = clang++                                                # Compiler (changed from clang to g++)
 CFLAGS  = -Wall -Wextra -Werror -I./include -Wno-error  -std=c++20     # Compiler flags
 HEADERS = $(shell find -name '*.h')                          # Dynamically find all header files
 LDFLAGS = -lm  # Linker flags
