@@ -50,7 +50,18 @@ std::vector<std::string> fpermissions(std::vector<std::string>& f_info, struct s
 
 std::vector<std::string> others(std::vector<std::string>& f_info, struct stat file, int i)
 {
-    f_info[i].append(" " + std::to_string(file.st_nlink));
+    struct passwd *pw = getpwuid(file.st_uid);
+    struct group *grp = getgrgid(file.st_gid);
+    char time[20];
+    struct tm* timeinfo = localtime(&file.st_mtime);
+
+    strftime(time, sizeof(time), "%b %d %H:%M", timeinfo);
+    f_info[i].append(" ").append(std::to_string(file.st_nlink));
+    f_info[i].append(" ").append(pw->pw_name);
+    f_info[i].append(" ").append(grp->gr_name);
+    f_info[i].append(" ").append(std::to_string(file.st_size));
+    f_info[i].append(" ").append(time);
+    return f_info;
 }
 
 std::vector<std::string> name(std::vector<std::string>& f_info, int i, std::vector<std::string> indir)
