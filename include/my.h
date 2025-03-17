@@ -11,7 +11,7 @@
     #define MY_H
     #include "cpp.h"
     #include "alias.h"
-    void my_ls(void);
+    void my_ls(std::vector<std::string> parameter);
     int tcharwidth(void);
     int longstring(std::vector<std::string> content);
     int step(std::vector<std::string> astring);
@@ -20,4 +20,5 @@
     std::vector<std::string> info(std::vector<std::string> indir);
     std::vector<std::string> stime(std::vector<std::string>& files);
     void display(std::vector<std::string> indir);
+    std::vector<std::string> recursive(std::vector<std::string> filelist, std::vector<std::string> path, int i);
 #endif

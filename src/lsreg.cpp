@@ -42,7 +42,7 @@ void display(std::vector<std::string> indir)
     }
 }
 
-void my_ls(void)
+void my_ls(std::vector<std::string> parameter)
 {
     struct dirent *rep = NULL;
     DIR *r = NULL;
@@ -50,20 +50,31 @@ void my_ls(void)
     std::vector<std::string> content;
     std::vector<std::string> lflag;
 
-    r = opendir(here);
-    if(r == NULL){fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");}
-    rep = readdir(r);
-    while(rep != NULL){
-        content.emplace_back(rep->d_name);
+    for (size_t i = 0; i < parameter.size(); i++)
+    {
+        printf("hey\n");
+        r = opendir(parameter[i].c_str());
+        if(r == NULL){fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");}
         rep = readdir(r);
+        while(rep != NULL){
+            content.emplace_back(rep->d_name);
+            rep = readdir(r);
+        }
+        closedir(r);
+        regsort(content);
+        content = recursive(content, parameter, i);
+        content = info(content);
+        for (size_t i = 0; i < content.size(); i++) {
+            cout << content[i] << endl;
+        }
+        content.clear();
     }
-    closedir(r);
     //lflag = info(content);
-    stime(content);
+    //stime(content);
     //reverse(content);
-    for (size_t i = 0; i < content.size(); i++) {
-        cout << content[i] << endl;
-    }
+    // for (size_t i = 0; i < content.size(); i++) {
+    //     cout << content[i] << endl;
+    // }
     //regsort(content);
     //reverse(content);
     //display(content);
