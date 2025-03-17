@@ -20,6 +20,5 @@
     std::vector<std::string> info(std::vector<std::string> indir);
     std::vector<std::string> stime(std::vector<std::string>& files);
     void display(std::vector<std::string> indir);
-    std::vector<std::string> recursive(std::vector<std::string> filelist, std::vector<std::string> path, int i);
-    std::vector<std::string> get_dir_content(std::string parameter);
+    void recursive(std::vector<std::string> filelist, std::vector<std::string> path, int i);
 #endif

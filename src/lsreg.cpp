@@ -61,10 +61,7 @@ void my_ls(std::vector<std::string> parameter)
         closedir(r);
         regsort(content);
         display(content);
-        content = recursive(content, parameter, i);
-        for (size_t i = 0; i < content.size(); i++) {
-            cout << content[i] << endl;
-        }
+        recursive(content, parameter, i);
         content.clear();
     }
     //lflag = info(content);
