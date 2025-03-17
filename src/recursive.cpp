@@ -9,6 +9,15 @@
 
 #include "../include/my.h"
 
+void remove_parent(std::vector<std::string>& dir, size_t& i) {
+    dir.erase(std::remove_if(dir.begin(), dir.end(),
+                             [&](const std::string& s) { return s.ends_with("."); }),
+              dir.end());
+    dir.erase(std::remove_if(dir.begin(), dir.end(),
+                             [&](const std::string& s) { return s.ends_with(".."); }),
+              dir.end());
+}
+
 std::vector<std::string> get_dir1(std::vector<std::string> file, std::vector<std::string> path, int i)
 {
     struct stat utility;
@@ -71,8 +80,12 @@ void get_dir_content(std::string parameter)
     cout << endl;
     lcontinue = get_dir2(content, parameter);
     if (!lcontinue.empty()) {
-        for (size_t i = 2; i < lcontinue.size(); i++) {
-            get_dir_content(lcontinue[i]);
+        for (size_t i = 0; i < lcontinue.size(); i++) {
+            if (lcontinue[i].find(".") != std::string::npos || lcontinue[i].find("..") != std::string::npos) {
+                continue;
+            } else {
+                get_dir_content(lcontinue[i]); 
+            }
         }
     }
 }
@@ -87,8 +100,11 @@ void recursive(std::vector<std::string> filelist, std::vector<std::string> path,
     cout << endl;
     if (!directories.empty()) {
         for (size_t j = 0; j < directories.size(); j++) {
-            if (directories[j][0] != '.') {
-                get_dir_content(directories[j]);
+            if (directories[j].find(".") != std::string::npos || directories[j].find("..") != std::string::npos) {
+                continue;
+            } else {
+                std::cout << endl << directories[j] << endl;
+                get_dir_content(directories[j]); 
             }
         }
     }
