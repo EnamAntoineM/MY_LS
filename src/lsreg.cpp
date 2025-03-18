@@ -33,13 +33,10 @@ void my_ls(std::vector<std::string> parameter)
             }
             closedir(r);
             regsort(content);
-            lflag = get_file_path(content, parameter[i]);
-            lflag = info(lflag);
+            //lflag = get_file_path(content, parameter[i]);
+            //lflag = info(lflag);
  //           reverse(lflag);
-            for (size_t i = 0; i < lflag.size(); i++) {
-                cout << lflag[i] << endl;
-            }
-            //display(content);
+            display(content);
             recursive(content, parameter, i);
             content.clear();
         }

@@ -22,15 +22,17 @@ void get_dir_content(std::string parameter)
 {
     struct dirent *rep = NULL;
     DIR *r = NULL;
+    struct stat type;
     std::vector<std::string> content;
     std::vector<std::string> lcontinue;
     std::vector<std::string> lflag;
 
-    std::cout << endl << parameter << endl;
-    r = opendir(parameter.c_str());
-    if(r == NULL){
+    lstat(parameter.c_str(), &type);
+    if(lstat(parameter.c_str(), &type) == -1){
         fprintf(stderr, "my_ls : Cannot access: No such file or directory,\n");
-    } else {
+    } else if (S_ISDIR(type.st_mode)) {
+ //       std::cout << endl << parameter << endl;
+        r = opendir(parameter.c_str());
         rep = readdir(r);
         while(rep != NULL){
             content.emplace_back(rep->d_name);
@@ -38,18 +40,23 @@ void get_dir_content(std::string parameter)
         }
         closedir(r);
         regsort(content);
-        lflag = get_file_path(content, parameter);
-        lflag = info(lflag);
-        simple_print(lflag);
+        //lflag = get_file_path(content, parameter);
+        //lflag = info(lflag);
+        //simple_print(lflag);
         //reverse(lflag);
-        //display(content);
+        display(content);
+        std::cout << endl;
         lcontinue = get_dir2(content, parameter);
         if (!lcontinue.empty()) {
             for (size_t i = 0; i < lcontinue.size(); i++) {
-                if (lcontinue[i].find(".") != std::string::npos || lcontinue[i].find("..") != std::string::npos) {
-                    continue;
-                } else {
-                    get_dir_content(lcontinue[i]); 
+                lstat(lcontinue[i].c_str(), &type);
+                if (S_ISDIR(type.st_mode)) {
+                    if (lcontinue[i].find(".") != std::string::npos || lcontinue[i].find("..") != std::string::npos) {
+                        continue;
+                    } else {
+                        std::cout << endl << lcontinue[i] << endl;
+                        get_dir_content(lcontinue[i]); 
+                    }
                 }
             }
         }

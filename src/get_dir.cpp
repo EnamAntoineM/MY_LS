@@ -16,15 +16,6 @@ std::vector<std::string> get_dir1(std::vector<std::string> file, std::vector<std
     for (std::string& in_array : file) {
         in_array.insert(0, path[i] + "/");
     }
-    for (size_t j = 0; j < file.size();) {
-        lstat(file[j].c_str(), &utility);
-        if (!S_ISDIR(utility.st_mode)) {
-            file.erase(file.begin() + j); //the erase method requires an iterator.
-            //file.begin() points at the beginning of the array and + i specifies the elemnt that has to be deleted.
-        } else {
-            j++;
-        }
-    }
     return file;
 }
 
@@ -35,16 +26,6 @@ std::vector<std::string> get_dir2(std::vector<std::string> file, std::string pat
     for (std::string& in_array : file) {
         in_array.insert(0, path + "/");
     }
-    for (size_t j = 0; j < file.size();) {
-        lstat(file[j].c_str(), &utility);
-        if (!S_ISDIR(utility.st_mode)) {
-            file.erase(file.begin() + j); //the erase method requires an iterator.
-            //file.begin() points at the beginning of the array and + i specifies the elemnt that has to be deleted.
-        } else {
-            j++;
-        }
-    }
-
     return file;
 }
 
