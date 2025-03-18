@@ -12,7 +12,7 @@
     #include "cpp.h"
     #include "alias.h"
     #include "flag.h"
-    void my_ls(std::vector<std::string> parameter);
+    void my_ls(std::vector<std::string> parameter, flag flags);
     int tcharwidth(void);
     int longstring(std::vector<std::string> content);
     int step(std::vector<std::string> astring);

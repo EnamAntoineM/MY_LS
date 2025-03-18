@@ -9,7 +9,7 @@
 
 #include "../include/my.h"
 
-void my_ls(std::vector<std::string> parameter)
+void my_ls(std::vector<std::string> parameter, flag flags)
 {
     struct dirent *rep = NULL;
     DIR *r = NULL;

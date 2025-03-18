@@ -7,16 +7,14 @@
 ** File description:
 */
 
-#include "../include/my.h"
-
-#ifndef flag
-    #define win
-    typedef struct {
+#ifndef Flag
+    #define Flag
+    struct flag {
         bool l;
         bool r;
         bool R;
         bool a;
         bool d;
         bool t;
-    } flag;
+    };
 #endif

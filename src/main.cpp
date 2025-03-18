@@ -9,22 +9,36 @@
 
 #include "../include/my.h"
 
-int main(int argc, char **argv)
-{
-    std::vector<std::string> parameter;
-    bool all = false;
-    if(argc == 1){
-        parameter = {"."};
-        cout << "Hey my_ls is working bro" << endl;
-        my_ls(parameter);
+int main(int argc, char **argv) {
+    std::vector<std::string> parameters;
+    flag flags = {false, false, false, false, false, false};
+
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if (arg[0] == '-') {
+            for (size_t j = 1; j < arg.size(); ++j) {
+                char c = arg[j];
+                switch (c) {
+                    case 'l': flags.l = true; break;
+                    case 'a': flags.a = true; break;
+                    case 'R': flags.R = true; break;
+                    case 'r': flags.r = true; break;
+                    case 'd': flags.d = true; break;
+                    case 't': flags.t = true; break;
+                    default:
+                        std::cerr << "my_ls: invalid option -- '" << c << "'\n";
+                        exit(84);
+                }
+            }
+        } else {
+            parameters.push_back(arg);
+        }
     }
-    else{
-        parameter = std::vector<std::string>(argv + 1, argv + argc); //skipping the first element of argv which is the program name
-        my_ls(parameter);
+
+    if (parameters.empty()) {
+        parameters.push_back("."); // Default to current directory
     }
+
+    my_ls(parameters, flags);
     return 0;
 }
-
-//write a function that delete every entry that starts with "."
-//Have a function that if the flag -R is detected look for the directories in the array of files and put them in a different array
-//
