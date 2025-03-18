@@ -9,14 +9,6 @@
 
 #include "../include/my.h"
 
-std::vector<std::string> get_file_path(std::vector<std::string> file, std::string path)
-{
-    for (std::string& in_array : file) {
-        in_array.insert(0, path + "/");
-    }
-    return file;
-}
-
 void remove_parent(std::vector<std::string>& dir, size_t& i) {
     dir.erase(std::remove_if(dir.begin(), dir.end(),
                              [&](const std::string& s) { return s.ends_with("."); }),
@@ -24,45 +16,6 @@ void remove_parent(std::vector<std::string>& dir, size_t& i) {
     dir.erase(std::remove_if(dir.begin(), dir.end(),
                              [&](const std::string& s) { return s.ends_with(".."); }),
               dir.end());
-}
-
-std::vector<std::string> get_dir1(std::vector<std::string> file, std::vector<std::string> path, int i)
-{
-    struct stat utility;
-
-    for (std::string& in_array : file) {
-        in_array.insert(0, path[i] + "/");
-    }
-    for (size_t j = 0; j < file.size();) {
-        lstat(file[j].c_str(), &utility);
-        if (!S_ISDIR(utility.st_mode)) {
-            file.erase(file.begin() + j); //the erase method requires an iterator.
-            //file.begin() points at the beginning of the array and + i specifies the elemnt that has to be deleted.
-        } else {
-            j++;
-        }
-    }
-    return file;
-}
-
-std::vector<std::string> get_dir2(std::vector<std::string> file, std::string path)
-{
-    struct stat utility;
-
-    for (std::string& in_array : file) {
-        in_array.insert(0, path + "/");
-    }
-    for (size_t j = 0; j < file.size();) {
-        lstat(file[j].c_str(), &utility);
-        if (!S_ISDIR(utility.st_mode)) {
-            file.erase(file.begin() + j); //the erase method requires an iterator.
-            //file.begin() points at the beginning of the array and + i specifies the elemnt that has to be deleted.
-        } else {
-            j++;
-        }
-    }
-
-    return file;
 }
 
 void get_dir_content(std::string parameter)
@@ -87,12 +40,9 @@ void get_dir_content(std::string parameter)
         regsort(content);
         lflag = get_file_path(content, parameter);
         lflag = info(lflag);
+        simple_print(lflag);
         //reverse(lflag);
-        for (size_t i = 0; i < lflag.size(); i++) {
-            cout << lflag[i] << endl;
-        }
         //display(content);
-        cout << endl;
         lcontinue = get_dir2(content, parameter);
         if (!lcontinue.empty()) {
             for (size_t i = 0; i < lcontinue.size(); i++) {
