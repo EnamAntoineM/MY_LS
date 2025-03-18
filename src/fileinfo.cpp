@@ -80,6 +80,7 @@ std::vector<std::string> info(std::vector<std::string> indir)
         lstat(indir[i].c_str(), &file);
         if(lstat(indir[i].c_str(), &file) == -1){
             fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");
+            cout << indir[i] << endl;
         }
         informations = ftype(indir, file, i);
         informations = fpermissions(indir, file, i);

@@ -9,6 +9,14 @@
 
 #include "../include/my.h"
 
+std::vector<std::string> get_file_path(std::vector<std::string> file, std::string path)
+{
+    for (std::string& in_array : file) {
+        in_array.insert(0, path + "/");
+    }
+    return file;
+}
+
 void remove_parent(std::vector<std::string>& dir, size_t& i) {
     dir.erase(std::remove_if(dir.begin(), dir.end(),
                              [&](const std::string& s) { return s.ends_with("."); }),
@@ -63,10 +71,10 @@ void get_dir_content(std::string parameter)
     DIR *r = NULL;
     std::vector<std::string> content;
     std::vector<std::string> lcontinue;
+    std::vector<std::string> lflag;
 
     std::cout << endl << parameter << endl;
     r = opendir(parameter.c_str());
-    std::cout << endl << parameter << endl;
     if(r == NULL){
         fprintf(stderr, "my_ls : Cannot access: No such file or directory,\n");
     } else {
@@ -77,7 +85,13 @@ void get_dir_content(std::string parameter)
         }
         closedir(r);
         regsort(content);
-        display(content);
+        lflag = get_file_path(content, parameter);
+        lflag = info(lflag);
+        //reverse(lflag);
+        for (size_t i = 0; i < lflag.size(); i++) {
+            cout << lflag[i] << endl;
+        }
+        //display(content);
         cout << endl;
         lcontinue = get_dir2(content, parameter);
         if (!lcontinue.empty()) {

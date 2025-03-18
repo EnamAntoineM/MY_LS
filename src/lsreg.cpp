@@ -55,12 +55,11 @@ void my_ls(std::vector<std::string> parameter)
     for (size_t i = 0; i < parameter.size(); i++)
     {
         if(lstat(parameter[i].c_str(), &type) != -1 && !S_ISDIR(type.st_mode)) {
-            printf("hey\n");
             cout << endl << parameter[i] << endl;
         } else {
             r = opendir(parameter[i].c_str());
             if(r == NULL){
-                printf("hey\n");
+                cout << parameter[i] << endl;
                 fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");}
             rep = readdir(r);
             while(rep != NULL){
@@ -69,7 +68,13 @@ void my_ls(std::vector<std::string> parameter)
             }
             closedir(r);
             regsort(content);
-            display(content);
+            lflag = get_file_path(content, parameter[i]);
+            lflag = info(lflag);
+ //           reverse(lflag);
+            for (size_t i = 0; i < lflag.size(); i++) {
+                cout << lflag[i] << endl;
+            }
+            //display(content);
             recursive(content, parameter, i);
             content.clear();
         }
