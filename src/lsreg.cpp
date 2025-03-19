@@ -60,7 +60,6 @@ int my_ls(std::vector<std::string> parameter, flag flags)
             info_indir(lflag);
             //simple_print(lflag);
             recursive(content, parameter, i, flags);
-            //content.clear();
         }
         // if (i = parameter.size()) {
         //     return 0;
