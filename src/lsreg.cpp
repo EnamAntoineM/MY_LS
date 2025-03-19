@@ -9,7 +9,7 @@
 
 #include "../include/my.h"
 
-void my_ls(std::vector<std::string> parameter, flag flags)
+int my_ls(std::vector<std::string> parameter, flag flags)
 {
     struct dirent *rep = NULL;
     DIR *r = NULL;
@@ -19,6 +19,10 @@ void my_ls(std::vector<std::string> parameter, flag flags)
 
     for (size_t i = 0; i < parameter.size(); i++)
     {
+        if (flags.d) {
+            display(parameter);
+            return 0;
+        }
         if(lstat(parameter[i].c_str(), &type) != -1 && !S_ISDIR(type.st_mode)) {
             cout << endl << parameter[i] << endl;
         } else {
@@ -33,14 +37,36 @@ void my_ls(std::vector<std::string> parameter, flag flags)
             }
             closedir(r);
             regsort(content);
-            //lflag = get_file_path(content, parameter[i]);
-            //lflag = info(lflag);
- //           reverse(lflag);
+        }
+        if (!flags.a && !flags.l && !flags.d && !flags.r && !flags.R && !flags.t) {
             display(content);
-            recursive(content, parameter, i);
+  //          if (i = parameter.size())
+//                return 0;
+        }
+        if (flags.t) {
+            stime(content);
+        }
+        // if (flags.l && !flags.d && !flags.R) {
+        //     lflag = info(content);
+        //     simple_print(lflag);
+        //     return 0;
+        // }
+        if (flags.R && !flags.l) {
+            display(content);
+            recursive(content, parameter, i, flags);
             content.clear();
         }
+        if (flags.R && flags.l) {
+            info_indir(lflag);
+            //simple_print(lflag);
+            recursive(content, parameter, i, flags);
+            //content.clear();
+        }
+        // if (i = parameter.size()) {
+        //     return 0;
+        // }
     }
+    return 0;
     //lflag = info(content);
     //stime(content);
     //reverse(content);

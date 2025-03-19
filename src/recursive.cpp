@@ -18,7 +18,7 @@ void remove_parent(std::vector<std::string>& dir, size_t& i) {
               dir.end());
 }
 
-void get_dir_content(std::string parameter)
+void get_dir_content(std::string parameter, flag flags)
 {
     struct dirent *rep = NULL;
     DIR *r = NULL;
@@ -31,7 +31,6 @@ void get_dir_content(std::string parameter)
     if(lstat(parameter.c_str(), &type) == -1){
         fprintf(stderr, "my_ls : Cannot access: No such file or directory,\n");
     } else if (S_ISDIR(type.st_mode)) {
- //       std::cout << endl << parameter << endl;
         r = opendir(parameter.c_str());
         rep = readdir(r);
         while(rep != NULL){
@@ -40,11 +39,22 @@ void get_dir_content(std::string parameter)
         }
         closedir(r);
         regsort(content);
-        //lflag = get_file_path(content, parameter);
-        //lflag = info(lflag);
-        //simple_print(lflag);
-        //reverse(lflag);
-        display(content);
+        if (flags.t) {
+            stime(content);
+        }
+        if (flags.l) {
+            info_indir(content);
+        //     if (flags.r) {
+        //         reverse(lflag);
+        //     } else {
+        //         simple_print(lflag);
+        //     }
+        // }
+        // if (flags.r && flags.l) {
+        //     reverse(content);
+        // } else {
+        //     //display(content);
+        }
         std::cout << endl;
         lcontinue = get_dir2(content, parameter);
         if (!lcontinue.empty()) {
@@ -55,7 +65,7 @@ void get_dir_content(std::string parameter)
                         continue;
                     } else {
                         std::cout << endl << lcontinue[i] << endl;
-                        get_dir_content(lcontinue[i]); 
+                        get_dir_content(lcontinue[i], flags); 
                     }
                 }
             }
@@ -63,7 +73,7 @@ void get_dir_content(std::string parameter)
     }
 }
 
-void recursive(std::vector<std::string> filelist, std::vector<std::string> path, int i)
+void recursive(std::vector<std::string> filelist, std::vector<std::string> path, int i, flag flags)
 {
     struct stat utility;
     struct dirent *rep = NULL;
@@ -78,7 +88,7 @@ void recursive(std::vector<std::string> filelist, std::vector<std::string> path,
                 continue;
             } else {
                 std::cout << endl << directories[j] << endl;
-                get_dir_content(directories[j]); 
+                get_dir_content(directories[j], flags); 
             }
         }
     }

@@ -89,3 +89,19 @@ std::vector<std::string> info(std::vector<std::string> indir)
     }
     return informations;
 }
+
+void info_indir(std::vector<std::string> indir)
+{
+    struct stat file;
+    std::vector<std::string> copy = indir;
+    std::vector<std::string> informations;
+
+    for(size_t i = 0; i < indir.size(); i++) {
+        lstat(indir[i].c_str(), &file);
+        informations = ftype(indir, file, i);
+        informations = fpermissions(indir, file, i);
+        informations = others(indir, file, i);
+        informations = name(indir, i, copy);
+        cout << informations[i] << endl;
+    }
+}

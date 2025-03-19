@@ -36,6 +36,9 @@ void display(std::vector<std::string> indir)
                     format++;
                 }
                 else {
+                    see = control - indir[i].size() + 2;
+                    cout << indir[i];
+                    printspace(indir, see);
                     format = 0;
                     cout << endl;
                 }
