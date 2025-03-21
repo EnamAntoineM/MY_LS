@@ -63,7 +63,7 @@ int my_ls(std::vector<std::string> parameter, flag flags)
             r = opendir(parameter[i].c_str());
             if(r == NULL){
                 cout << parameter[i] << endl;
-                fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");}
+                fprintf(stderr, "my_ls : Cannot access: No such file or directory\n"); }
             rep = readdir(r);
             while(rep != NULL){
                 if (rep->d_name[0] == '.') {
