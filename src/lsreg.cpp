@@ -25,18 +25,20 @@ int my_ls_a(std::vector<std::string> parameter, flag flags)
             r = opendir(parameter[i].c_str());
             if(r == NULL){
                 cout << parameter[i] << endl;
-                fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");}
-            rep = readdir(r);
-            while(rep != NULL){
-                content.emplace_back(rep->d_name);
+                perror("my_ls");
+            } else {
                 rep = readdir(r);
-            }
-            closedir(r);
-            regsort(content);
-            if (flags.R) {
-                display(content, flags);
-                recursive(content, parameter, i, flags);
-                content.clear();
+                while(rep != NULL){
+                    content.emplace_back(rep->d_name);
+                    rep = readdir(r);
+                }
+                closedir(r);
+                regsort(content);
+                if (flags.R) {
+                    display(content, flags);
+                    recursive(content, parameter, i, flags);
+                    content.clear();
+                }
             }
         }
     }

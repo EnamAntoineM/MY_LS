@@ -20,28 +20,32 @@ void get_dir_content(std::string parameter, flag flags)
 
     lstat(parameter.c_str(), &type);
     if(lstat(parameter.c_str(), &type) == -1){
-        fprintf(stderr, "my_ls : Cannot access: No such file or directory,\n");
+        perror("my_ls");
     } else if (S_ISDIR(type.st_mode)) {
         r = opendir(parameter.c_str());
-        rep = readdir(r);
-        while(rep != NULL){
-            if (!flags.a) {
-                if (rep->d_name[0] == '.') {
-                    rep = readdir(r);
+        if (r == NULL) {
+            perror("my_ls");
+        } else {
+            rep = readdir(r);
+            while(rep != NULL){
+                if (!flags.a) {
+                    if (rep->d_name[0] == '.') {
+                        rep = readdir(r);
+                    } else {
+                        if (rep->d_name[sizeof(rep->d_name)] == '.') {
+                            rep = readdir(r);
+                        } else {
+                            content.emplace_back(rep->d_name);
+                            rep = readdir(r);
+                        }
+                    }
                 } else {
                     if (rep->d_name[sizeof(rep->d_name)] == '.') {
-                        rep = readdir(r);
+                            rep = readdir(r);
                     } else {
                         content.emplace_back(rep->d_name);
                         rep = readdir(r);
                     }
-                }
-            } else {
-                if (rep->d_name[sizeof(rep->d_name)] == '.') {
-                        rep = readdir(r);
-                } else {
-                    content.emplace_back(rep->d_name);
-                    rep = readdir(r);
                 }
             }
         }
@@ -52,15 +56,16 @@ void get_dir_content(std::string parameter, flag flags)
         lcontinue = get_dir2(content, parameter);
         if (!lcontinue.empty()) {
             for (size_t i = 0; i < lcontinue.size(); i++) {
-            lstat(lcontinue[i].c_str(), &type);
-            if (S_ISDIR(type.st_mode)) {
-                if (lcontinue[i][lcontinue[i].size() - 1] == '.') {
-                    continue;
-                } else {
-                    std::cout << endl << lcontinue[i] << endl;
-                    get_dir_content(lcontinue[i], flags); 
+                if (lstat(lcontinue[i].c_str(), &type) == -1) {
+                    fprintf(stderr, "my_ls : Cannot access: No such file or directory,\n");
+                } else if (S_ISDIR(type.st_mode)) {
+                        if (lcontinue[i][lcontinue[i].size() - 1] == '.') {
+                        continue;
+                    } else {
+                        std::cout << endl << lcontinue[i] << endl;
+                        get_dir_content(lcontinue[i], flags); 
+                    }
                 }
-            }
             }
         }
     }

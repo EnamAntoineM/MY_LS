@@ -44,4 +44,5 @@
     #include <sys/ioctl.h> 
     #include "cctype"
     #include "cstring"
+    #include "cerrno"
 #endif
