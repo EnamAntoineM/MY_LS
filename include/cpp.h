@@ -43,4 +43,5 @@
     #include <cstdio>        // For std::perror, std::strerror
     #include <sys/ioctl.h> 
     #include "cctype"
+    #include "cstring"
 #endif

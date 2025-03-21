@@ -9,10 +9,8 @@
 
 #include "../include/my.h"
 
-std::vector<std::string> get_dir1(std::vector<std::string> file, std::vector<std::string> path, int i)
+std::vector<std::string> get_dir1(std::vector<std::string>& file, std::vector<std::string> path, int i)
 {
-    struct stat utility;
-
     for (std::string& in_array : file) {
         in_array.insert(0, path[i] + "/");
     }
@@ -21,8 +19,6 @@ std::vector<std::string> get_dir1(std::vector<std::string> file, std::vector<std
 
 std::vector<std::string> get_dir2(std::vector<std::string> file, std::string path)
 {
-    struct stat utility;
-
     for (std::string& in_array : file) {
         in_array.insert(0, path + "/");
     }

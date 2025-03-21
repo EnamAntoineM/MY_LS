@@ -33,7 +33,7 @@ void maxi(std::vector<int>& list, int size)
     }
 }
 
-int longstring(std::vector<std::string> content)
+int longstring(std::vector<std::string> content, flag flags)
 {
     int size = content.size();
     if (size == 0) return 3;
@@ -41,7 +41,15 @@ int longstring(std::vector<std::string> content)
 
     for (int i = 0; i < size; i++) {
         if (!content[i].empty()) {
-            array[i] = content[i].size();
+            if (flags.a) {
+                if (content[i][0] == '.') {
+                    continue;
+                } else {
+                    array[i] = content[i].size();
+                }
+            } else {
+                array[i] = content[i].size();
+            }
         }
     }
     for (int j = 0; j < size - 1; j++) {
@@ -50,14 +58,14 @@ int longstring(std::vector<std::string> content)
     return array[0] + 3;
 }
 
-int step(std::vector<std::string> astring)
+int step(std::vector<std::string> astring, flag flags)
 {
     int column = tcharwidth();
-    int lstring = longstring(astring);
+    int lstring = longstring(astring, flags);
     int step = column / lstring;
 
     if(step > 7){
-        step = 7;
+        step = 10;
     }
     return step;
 }

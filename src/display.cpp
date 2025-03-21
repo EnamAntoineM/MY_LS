@@ -19,29 +19,37 @@ void printspace(std::vector<std::string> indir, int see)
     }
 }
 
-void display(std::vector<std::string> indir)
+void print_it(int limit, int control, std::vector<std::string> indir, size_t see, int& format, size_t& i)
 {
-    int limit = step(indir);
-    int control = longstring(indir);
+    if (format < limit) {
+        see = control - indir[i].size() + 2;
+        cout << indir[i];
+        printspace(indir, see);
+        format++;
+    } else {
+        cout << endl;
+        format = 0;
+        i--;
+    }
+}
+
+void display(std::vector<std::string> indir, flag flags)
+{
+    int limit = step(indir, flags);
+    int control = longstring(indir, flags);
     size_t see = 0;
     int format = 0;
 
     if (!indir.empty()) {
-        for(size_t i = 0; i < indir.size(); i++){
-            if(indir[i][0] != '.'){
-                if(format != limit){
-                    see = control - indir[i].size() + 2;
-                    cout << indir[i];
-                    printspace(indir, see);
-                    format++;
+        for(size_t i = 0; i < indir.size(); i++) {
+            if (flags.a) {
+                if (indir[i][0] == '.') {
+                    continue;
+                } else {
+                    print_it(limit, control, indir, see, format, i);
                 }
-                else {
-                    see = control - indir[i].size() + 2;
-                    cout << indir[i];
-                    printspace(indir, see);
-                    format = 0;
-                    cout << endl;
-                }
+            } else {
+                print_it(limit, control, indir, see, format, i);
             }
         }
     }

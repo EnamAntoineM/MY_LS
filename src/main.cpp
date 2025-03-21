@@ -38,7 +38,6 @@ int main(int argc, char **argv) {
     if (parameters.empty()) {
         parameters.push_back("."); // Default to current directory
     }
-
     my_ls(parameters, flags);
     return 0;
 }
