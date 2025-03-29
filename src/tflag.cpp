@@ -9,7 +9,7 @@
 
 #include "../include/my.h"
 
-std::vector<std::string> stime_f(std::vector<std::string>& files)
+void stime_f(std::vector<std::string>& files, bool& swap)
 {
     std::string bait;
     struct stat time1;
@@ -22,17 +22,21 @@ std::vector<std::string> stime_f(std::vector<std::string>& files)
             bait = files[i];
             files[i] = files[i + 1];
             files[i + 1] = bait;
+            swap = true;
         }
     }
-    return files;
 }
 
-std::vector<std::string> stime(std::vector<std::string>& files)
+void stime(std::vector<std::string>& files)
 {
+    bool swap = true;
+
     for(size_t i = 0; i < files.size(); i++){
-        stime_f(files);
+        stime_f(files, swap);
+        if (!swap) {
+            break;
+        }
     }
-    return files;
 }
 
 

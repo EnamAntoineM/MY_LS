@@ -17,6 +17,7 @@ void get_dir_content(std::string parameter, flag flags)
     std::vector<std::string> content;
     std::vector<std::string> lcontinue;
     std::vector<std::string> lflag;
+    std::vector<std::string> tflags;
 
     lstat(parameter.c_str(), &type);
     if(lstat(parameter.c_str(), &type) == -1){
@@ -49,6 +50,10 @@ void get_dir_content(std::string parameter, flag flags)
                 }
             }
         }
+        if (flags.t) {
+            tflags = get_file_path(content, parameter);
+            stime(tflags);
+        }
         closedir(r);
         regsort(content);
         display(content, flags);
@@ -57,7 +62,7 @@ void get_dir_content(std::string parameter, flag flags)
         if (!lcontinue.empty()) {
             for (size_t i = 0; i < lcontinue.size(); i++) {
                 if (lstat(lcontinue[i].c_str(), &type) == -1) {
-                    fprintf(stderr, "my_ls : Cannot access: No such file or directory,\n");
+                    perror("my_ls");
                 } else if (S_ISDIR(type.st_mode)) {
                         if (lcontinue[i][lcontinue[i].size() - 1] == '.') {
                         continue;
@@ -77,7 +82,6 @@ void recursive(std::vector<std::string> filelist, std::vector<std::string> path,
     struct stat type;
 
     regsort(directories);
-    display(directories, flags);
     cout << endl;
     if (!directories.empty()) {
         for (size_t j = 0; j < directories.size(); j++) {

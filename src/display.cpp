@@ -9,22 +9,30 @@
 
 #include "../include/my.h"
 
-void printspace(std::vector<std::string> indir, int see)
+void simple_print(std::vector<std::string> to_print, flag flags)
 {
-    if(indir.size() < 10){
-        see = 2;
-    }
-    for(int j = 0; j < see; j++){
-        cout << " ";
+    for (size_t i = 0; i < to_print.size(); i++) {
+        if (!flags.a) {
+            if (to_print[i][to_print[i].size() - 1] == '.') {
+                continue;
+            } else {
+                cout << to_print[i] << endl;
+            }
+        }
     }
 }
 
 void print_it(int limit, int control, std::vector<std::string> indir, size_t see, int& format, size_t& i)
 {
     if (format < limit) {
-        see = control - indir[i].size() + 2;
+        see = control - indir[i].size();
         cout << indir[i];
-        printspace(indir, see);
+        if(indir.size() < 10){
+            see = 2;
+        }
+        for(int j = 0; j < see; j++){
+            cout << " ";
+        }
         format++;
     } else {
         cout << endl;
@@ -40,24 +48,13 @@ void display(std::vector<std::string> indir, flag flags)
     size_t see = 0;
     int format = 0;
 
-    if (!indir.empty()) {
+    if (indir.empty()) return;
+    if (flags.l) {
+        simple_print(indir, flags);
+    } else {
         for(size_t i = 0; i < indir.size(); i++) {
-            if (flags.a) {
-                if (indir[i][0] == '.') {
-                    continue;
-                } else {
-                    print_it(limit, control, indir, see, format, i);
-                }
-            } else {
-                print_it(limit, control, indir, see, format, i);
-            }
+            if (!flags.a && indir[i].back() == '.') continue;
+            print_it(limit, control, indir, see, format, i);
         }
-    }
-}
-
-void simple_print(std::vector<std::string> to_print)
-{
-    for (size_t i = 0; i < to_print.size(); i++) {
-        cout << to_print[i] << endl;
     }
 }

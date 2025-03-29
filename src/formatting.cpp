@@ -20,15 +20,13 @@ int tcharwidth(void)
     return terminal.ws_col;
 }
 
-void maxi(std::vector<int>& list, int size)
-{
-    int bait = 0;
+void maxi(std::vector<int>& list, int size, bool& swap) {
+    swap = false;
 
-    for(int i = 0; i < (size - 1); i++){
-        if(list[i] < list[i + 1]){
-            bait = list[i];
-            list[i] = list[i + 1];
-            list[i + 1] = bait;
+    for (int i = 0; i < size - 1; i++) {
+        if (list[i] < list[i + 1]) {
+            std::swap(list[i], list[i + 1]);
+            swap = true;
         }
     }
 }
@@ -36,13 +34,14 @@ void maxi(std::vector<int>& list, int size)
 int longstring(std::vector<std::string> content, flag flags)
 {
     int size = content.size();
+    bool swap;
     if (size == 0) return 3;
     std::vector<int> array(size, 0);
 
     for (int i = 0; i < size; i++) {
         if (!content[i].empty()) {
-            if (flags.a) {
-                if (content[i][0] == '.') {
+            if (!flags.a) {
+                if (content[i][content[i].size()] == '.') {
                     continue;
                 } else {
                     array[i] = content[i].size();
@@ -53,7 +52,10 @@ int longstring(std::vector<std::string> content, flag flags)
         }
     }
     for (int j = 0; j < size - 1; j++) {
-        maxi(array, size);
+        maxi(array, size, swap);
+        if (!swap) {
+            break;
+        }
     }
     return array[0] + 3;
 }
@@ -65,7 +67,7 @@ int step(std::vector<std::string> astring, flag flags)
     int step = column / lstring;
 
     if(step > 7){
-        step = 10;
+        step = 6;
     }
     return step;
 }

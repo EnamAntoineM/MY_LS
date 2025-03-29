@@ -45,4 +45,5 @@
     #include "cctype"
     #include "cstring"
     #include "cerrno"
+    #include <numeric>
 #endif

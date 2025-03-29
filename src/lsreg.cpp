@@ -16,6 +16,7 @@ int my_ls_a(std::vector<std::string> parameter, flag flags)
     struct stat type;
     std::vector<std::string> content;
     std::vector<std::string> lflag;
+    std::vector<std::string> tflags;
 
     for (size_t i = 0; i < parameter.size(); i++)
     {
@@ -34,8 +35,13 @@ int my_ls_a(std::vector<std::string> parameter, flag flags)
                 }
                 closedir(r);
                 regsort(content);
+                if (flags.t) {
+                    tflags = get_file_path(content, parameter[i]);
+                    stime(tflags);
+                    display(tflags, flags);
+                }
                 if (flags.R) {
-                    display(content, flags);
+                    display(tflags, flags);
                     recursive(content, parameter, i, flags);
                     content.clear();
                 }
@@ -52,6 +58,7 @@ int my_ls(std::vector<std::string> parameter, flag flags)
     struct stat type;
     std::vector<std::string> content;
     std::vector<std::string> lflag;
+    std::vector<std::string> tflags;
 
     if (flags.a) {
         my_ls_a(parameter, flags);
@@ -65,18 +72,28 @@ int my_ls(std::vector<std::string> parameter, flag flags)
             r = opendir(parameter[i].c_str());
             if(r == NULL){
                 cout << parameter[i] << endl;
-                fprintf(stderr, "my_ls : Cannot access: No such file or directory\n"); }
-            rep = readdir(r);
-            while(rep != NULL){
-                if (rep->d_name[0] == '.') {
-                    rep = readdir(r);
-                } else {
+                perror("my_ls");
+            } else {
+                rep = readdir(r);
+                while(rep != NULL){
                     content.emplace_back(rep->d_name);
                     rep = readdir(r);
                 }
             }
             closedir(r);
             regsort(content);
+            if (flags.t) {
+                tflags = get_file_path(content, parameter[i]);
+                stime(tflags);
+                display(tflags, flags);
+            }
+            if (flags.l) {
+                lflag = get_file_path(content, parameter[i]);
+                info(lflag);
+                printf("\n");
+                lflag.clear();
+                content.clear();
+            }
             if (flags.R) {
                 display(content, flags);
                 recursive(content, parameter, i, flags);

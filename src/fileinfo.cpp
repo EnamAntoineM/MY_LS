@@ -64,13 +64,16 @@ std::vector<std::string> others(std::vector<std::string>& f_info, struct stat fi
     return f_info;
 }
 
-std::vector<std::string> name(std::vector<std::string>& f_info, int i, std::vector<std::string> indir)
+void name(std::vector<std::string>& f_info, int i, std::vector<std::string> indir)
 {
-    f_info[i].append(" ").append(indir[i]);
-    return f_info;
+    size_t j = 0;
+
+    for(j = indir[i].size(); indir[i][j] != '/'; j--);
+    f_info[i].append(" ").append(indir[i].substr(j + 1));
+    cout << f_info[i] << endl;
 }
 
-std::vector<std::string> info(std::vector<std::string> indir)
+void info(std::vector<std::string> indir)
 {
     struct stat file;
     std::vector<std::string> copy = indir;
@@ -81,11 +84,11 @@ std::vector<std::string> info(std::vector<std::string> indir)
         if(lstat(indir[i].c_str(), &file) == -1){
             fprintf(stderr, "my_ls : Cannot access: No such file or directory\n");
             cout << indir[i] << endl;
+        } else {
+            informations = ftype(indir, file, i);
+            informations = fpermissions(indir, file, i);
+            informations = others(indir, file, i);
+            name(indir, i, copy);
         }
-        informations = ftype(indir, file, i);
-        informations = fpermissions(indir, file, i);
-        informations = others(indir, file, i);
-        informations = name(indir, i, copy);
     }
-    return informations;
 }
