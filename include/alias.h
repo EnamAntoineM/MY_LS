@@ -16,5 +16,8 @@
     using std::cin;
     using std::printf;
     using std::fprintf;
+    using std::thread;
+    using std::mutex;
+    using std::min;
 #endif
 

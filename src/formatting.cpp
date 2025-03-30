@@ -40,15 +40,7 @@ int longstring(std::vector<std::string> content, flag flags)
 
     for (int i = 0; i < size; i++) {
         if (!content[i].empty()) {
-            if (!flags.a) {
-                if (content[i][content[i].size()] == '.') {
-                    continue;
-                } else {
-                    array[i] = content[i].size();
-                }
-            } else {
-                array[i] = content[i].size();
-            }
+            array[i] = content[i].size();
         }
     }
     for (int j = 0; j < size - 1; j++) {
@@ -60,10 +52,9 @@ int longstring(std::vector<std::string> content, flag flags)
     return array[0] + 3;
 }
 
-int step(std::vector<std::string> astring, flag flags)
+int step(std::vector<std::string> astring, flag flags, int lstring)
 {
     int column = tcharwidth();
-    int lstring = longstring(astring, flags);
     int step = column / lstring;
 
     if(step > 7){

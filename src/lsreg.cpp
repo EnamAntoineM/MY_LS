@@ -34,14 +34,14 @@ int my_ls_a(std::vector<std::string> parameter, flag flags)
                     rep = readdir(r);
                 }
                 closedir(r);
-                regsort(content);
+                regsort(content, flags);
                 if (flags.t) {
                     tflags = get_file_path(content, parameter[i]);
                     stime(tflags);
-                    display(tflags, flags);
+                    //display(tflags, flags);
                 }
                 if (flags.R) {
-                    display(tflags, flags);
+                    //display(tflags, flags);
                     recursive(content, parameter, i, flags);
                     content.clear();
                 }
@@ -81,11 +81,11 @@ int my_ls(std::vector<std::string> parameter, flag flags)
                 }
             }
             closedir(r);
-            regsort(content);
+            regsort(content, flags);
             if (flags.t) {
                 tflags = get_file_path(content, parameter[i]);
                 stime(tflags);
-                display(tflags, flags);
+                //display(tflags, flags);
             }
             if (flags.l) {
                 lflag = get_file_path(content, parameter[i]);
@@ -95,7 +95,7 @@ int my_ls(std::vector<std::string> parameter, flag flags)
                 content.clear();
             }
             if (flags.R) {
-                display(content, flags);
+                //display(content, flags);
                 recursive(content, parameter, i, flags);
                 content.clear();
             }

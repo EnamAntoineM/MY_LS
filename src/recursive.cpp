@@ -18,6 +18,7 @@ void get_dir_content(std::string parameter, flag flags)
     std::vector<std::string> lcontinue;
     std::vector<std::string> lflag;
     std::vector<std::string> tflags;
+    std::string sorted;
 
     lstat(parameter.c_str(), &type);
     if(lstat(parameter.c_str(), &type) == -1){
@@ -29,25 +30,8 @@ void get_dir_content(std::string parameter, flag flags)
         } else {
             rep = readdir(r);
             while(rep != NULL){
-                if (!flags.a) {
-                    if (rep->d_name[0] == '.') {
-                        rep = readdir(r);
-                    } else {
-                        if (rep->d_name[sizeof(rep->d_name)] == '.') {
-                            rep = readdir(r);
-                        } else {
-                            content.emplace_back(rep->d_name);
-                            rep = readdir(r);
-                        }
-                    }
-                } else {
-                    if (rep->d_name[sizeof(rep->d_name)] == '.') {
-                            rep = readdir(r);
-                    } else {
-                        content.emplace_back(rep->d_name);
-                        rep = readdir(r);
-                    }
-                }
+                content.emplace_back(rep->d_name);
+                rep = readdir(r);
             }
         }
         if (flags.t) {
@@ -55,8 +39,11 @@ void get_dir_content(std::string parameter, flag flags)
             stime(tflags);
         }
         closedir(r);
-        regsort(content);
-        display(content, flags);
+        sorted = regsort(content, flags);
+        cout << sorted;
+        // regsort1(content, flags);
+        // simple_print(content, flags);
+        //display(content, flags);
         std::cout << endl;
         lcontinue = get_dir2(content, parameter);
         if (!lcontinue.empty()) {
@@ -64,12 +51,8 @@ void get_dir_content(std::string parameter, flag flags)
                 if (lstat(lcontinue[i].c_str(), &type) == -1) {
                     perror("my_ls");
                 } else if (S_ISDIR(type.st_mode)) {
-                        if (lcontinue[i][lcontinue[i].size() - 1] == '.') {
-                        continue;
-                    } else {
-                        std::cout << endl << lcontinue[i] << endl;
-                        get_dir_content(lcontinue[i], flags); 
-                    }
+                    std::cout << endl << lcontinue[i] << endl;
+                    get_dir_content(lcontinue[i], flags);
                 }
             }
         }
@@ -81,18 +64,14 @@ void recursive(std::vector<std::string> filelist, std::vector<std::string> path,
     std::vector<std::string> directories = get_dir1(filelist, path, i);
     struct stat type;
 
-    regsort(directories);
+    regsort1(directories, flags);
     cout << endl;
     if (!directories.empty()) {
         for (size_t j = 0; j < directories.size(); j++) {
             lstat(directories[j].c_str(), &type);
             if (S_ISDIR(type.st_mode)) {
-                if (directories[j][directories[j].length() - 1] == '.') {
-                    continue;
-                } else {
-                    std::cout << endl << directories[j] << endl;
-                    get_dir_content(directories[j], flags); 
-                }
+                std::cout << endl << directories[j] << endl;
+                get_dir_content(directories[j], flags); 
             }
         }
     }

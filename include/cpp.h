@@ -46,4 +46,6 @@
     #include "cstring"
     #include "cerrno"
     #include <numeric>
+    #include "thread"
+    #include "mutex"
 #endif
