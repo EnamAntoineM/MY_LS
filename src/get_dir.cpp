@@ -25,7 +25,7 @@ std::vector<std::string> get_dir2(std::vector<std::string> file, std::string pat
     return file;
 }
 
-std::vector<std::string> get_file_path(std::vector<std::string> file, std::string path)
+std::vector<std::string> get_file_path(std::vector<std::string>& file, std::string path)
 {
     for (std::string& in_array : file) {
         in_array.insert(0, path + "/");

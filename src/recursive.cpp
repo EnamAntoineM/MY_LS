@@ -18,7 +18,7 @@ void get_dir_content(std::string parameter, flag flags)
     std::vector<std::string> lcontinue;
     std::vector<std::string> lflag;
     std::vector<std::string> tflags;
-    std::string sorted;
+    std::vector<std::string> copy;
 
     lstat(parameter.c_str(), &type);
     if(lstat(parameter.c_str(), &type) == -1){
@@ -34,23 +34,26 @@ void get_dir_content(std::string parameter, flag flags)
                 rep = readdir(r);
             }
         }
-        if (flags.t) {
-            tflags = get_file_path(content, parameter);
-            stime(tflags);
-        }
         closedir(r);
-        sorted = regsort(content, flags);
-        cout << sorted;
-        // regsort1(content, flags);
-        // simple_print(content, flags);
-        //display(content, flags);
+        regsort(content, flags);
+        copy = content;
+        if (flags.t) {
+            tflags = get_file_path(copy, parameter);
+            stime(content, copy);
+            display(content, flags);
+        } else {display(content, flags);}
+        if (flags.l) {
+            cout << parameter << endl;
+            lflag = get_file_path(content, parameter);
+            info(lflag, false);
+        }
         std::cout << endl;
         lcontinue = get_dir2(content, parameter);
         if (!lcontinue.empty()) {
             for (size_t i = 0; i < lcontinue.size(); i++) {
                 if (lstat(lcontinue[i].c_str(), &type) == -1) {
                     perror("my_ls");
-                } else if (S_ISDIR(type.st_mode)) {
+                } else if (S_ISDIR(type.st_mode) && lcontinue[i].back() != '.') {
                     std::cout << endl << lcontinue[i] << endl;
                     get_dir_content(lcontinue[i], flags);
                 }
@@ -69,8 +72,8 @@ void recursive(std::vector<std::string> filelist, std::vector<std::string> path,
     if (!directories.empty()) {
         for (size_t j = 0; j < directories.size(); j++) {
             lstat(directories[j].c_str(), &type);
-            if (S_ISDIR(type.st_mode)) {
-                std::cout << endl << directories[j] << endl;
+            if (S_ISDIR(type.st_mode) && directories[j].back() != '.') {
+                cout << endl << directories[j] << endl;
                 get_dir_content(directories[j], flags); 
             }
         }

@@ -9,43 +9,30 @@
 
 #include "../include/my.h"
 
-void simple_print(std::vector<std::string> to_print, flag flags)
+void simple_print(std::vector<std::string> to_print)
 {
     for (size_t i = 0; i < to_print.size(); i++) {
         cout << to_print[i] << endl;
     }
 }
 
-void print_it(int limit, int control, std::vector<std::string> indir, size_t see, int& format, size_t& i, std::string& sorted)
+void display(std::vector<std::string> indir, flag flags)
 {
-    if (format < limit) {
-        see = control - indir[i].size();
-        if(indir.size() < 10){
-            see = 2;
-        }
-        std::string spaces(see, ' ');
-        indir[i].append(spaces);
-        sorted.append(indir[i]);
-        format++;
-    } else {
-        see = control - indir[i].size();
-        if(indir.size() < 10){
-            see = 2;
-        }
-        std::string spaces(see, ' ');
-        indir[i].insert(0, "\n").append(spaces);
-        sorted.append(indir[i]);
-        format = 0;
-    }
-    printf("%s",sorted.c_str());
-}
-
-void display(std::vector<std::string> indir, flag flags, size_t i, std::string& sorted, int& format)
-{
-    int control = longstring(indir, flags);
-    int limit = step(indir, flags, control);
-    size_t see = 0;
+    int control = longstring(indir);
+    int limit = step(control);
+    size_t rows = 0;
+    size_t index = 0;
 
     if (indir.empty()) return;
-    print_it(limit, control, indir, see, format, i, sorted);
+    if (flags.r) index = indir.size();
+    rows = (indir.size() + limit - 1) / limit;
+    for (size_t row = 0; row < rows; row++) {
+        for (int col = 0; col < limit; col++) {
+            if (index < indir.size()) {
+                std::cout << std::left << std::setw(control) << indir[index];
+            }
+            if (!flags.r) {index++;} else {index--;}
+        }
+        std::cout << endl;
+    }
 }

@@ -13,17 +13,17 @@
 std::string toLower(const std::string& str)
 {
     std::string lowerStr = str;
+
     std::transform(lowerStr.begin(), lowerStr.end(), lowerStr.begin(), ::tolower);
     return lowerStr;
 }
 
 // 2. Function to perform a case-insensitive sort that preserves the original case
-std::string regsort(std::vector<std::string>& files, flag flags)
+void regsort(std::vector<std::string>& files, flag flags)
 {
     std::vector<std::string> lowerFiles;
     std::vector<int> indices;
     std::string sorted;
-    int format = 0;
 
     if (!flags.a) {
         for (size_t i = 0; i < files.size(); ) {
@@ -47,17 +47,12 @@ std::string regsort(std::vector<std::string>& files, flag flags)
     std::vector<std::string> sortedFiles(files.size());
     for (size_t i = 0; i < files.size(); i++) {
         sortedFiles[i] = files[indices[i]];
-        if (!flags.l) {
-            display(files, flags, i, sorted, format);
-        }
     }
     files = sortedFiles;
-    return sorted;
 }
 
 void regsort1(std::vector<std::string>& files, flag flags)
 {
-    cout << "hey";
     std::vector<std::string> lowerFiles = files;
     std::vector<int> indices(files.size());
 

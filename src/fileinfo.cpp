@@ -64,16 +64,28 @@ std::vector<std::string> others(std::vector<std::string>& f_info, struct stat fi
     return f_info;
 }
 
-void name(std::vector<std::string>& f_info, int i, std::vector<std::string> indir)
+void name(std::vector<std::string>& f_info, int i, std::vector<std::string> indir, bool& total)
 {
     size_t j = 0;
 
     for(j = indir[i].size(); indir[i][j] != '/'; j--);
     f_info[i].append(" ").append(indir[i].substr(j + 1));
+    if (!total) {
+        struct stat type;
+        int l_total = 0;
+        for (size_t j = 0; j < indir.size(); j++) {
+            if (lstat(indir[j].c_str(), &type) == 0) {
+                l_total += type.st_blocks;
+            }
+        }
+        l_total = l_total / 2;
+        std::cout << "total " << l_total << std::endl;
+        total = true;
+    }
     cout << f_info[i] << endl;
 }
 
-void info(std::vector<std::string> indir)
+void info(std::vector<std::string> indir, bool total)
 {
     struct stat file;
     std::vector<std::string> copy = indir;
@@ -88,7 +100,7 @@ void info(std::vector<std::string> indir)
             informations = ftype(indir, file, i);
             informations = fpermissions(indir, file, i);
             informations = others(indir, file, i);
-            name(indir, i, copy);
+            name(indir, i, copy, total);
         }
     }
 }

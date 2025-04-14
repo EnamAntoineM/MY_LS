@@ -31,7 +31,7 @@ void maxi(std::vector<int>& list, int size, bool& swap) {
     }
 }
 
-int longstring(std::vector<std::string> content, flag flags)
+int longstring(std::vector<std::string> content)
 {
     int size = content.size();
     bool swap;
@@ -52,7 +52,7 @@ int longstring(std::vector<std::string> content, flag flags)
     return array[0] + 3;
 }
 
-int step(std::vector<std::string> astring, flag flags, int lstring)
+int step(int lstring)
 {
     int column = tcharwidth();
     int step = column / lstring;

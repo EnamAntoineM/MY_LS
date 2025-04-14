@@ -9,34 +9,26 @@
 
 #include "../include/my.h"
 
-void stime_f(std::vector<std::string>& files, bool& swap)
+void stime(std::vector<std::string>& files, std::vector<std::string> copy)
 {
-    std::string bait;
+    std::vector<int> indices(files.size());
+    std::vector<std::string> sortedFiles(files.size());
     struct stat time1;
     struct stat time2;
 
-    for(size_t i = 0; i < (files.size() - 1); i++){
-        lstat(files[i].c_str(), &time1);
-        lstat(files[i+1].c_str(), &time2);
-        if(time1.st_mtime < time2.st_mtime){
-            bait = files[i];
-            files[i] = files[i + 1];
-            files[i + 1] = bait;
-            swap = true;
-        }
+    for (size_t i = 0; i < files.size(); ) {
+        indices[i] = i;
+        i++;
     }
-}
-
-void stime(std::vector<std::string>& files)
-{
-    bool swap = true;
-
-    for(size_t i = 0; i < files.size(); i++){
-        stime_f(files, swap);
-        if (!swap) {
-            break;
-        }
+    std::sort(indices.begin(), indices.end(), [&](int a, int b) {
+        lstat(copy[a].c_str(), &time1);
+        lstat(copy[b].c_str(), &time2);
+        return time1.st_mtime > time2.st_mtime;
+    });
+    for (size_t i = 0; i < files.size(); i++) {
+        sortedFiles[i] = files[indices[i]];
     }
+    files = sortedFiles;
 }
 
 
