@@ -24,14 +24,13 @@ void display(std::vector<std::string> indir, flag flags)
     size_t index = 0;
 
     if (indir.empty()) return;
-    if (flags.r) index = indir.size();
     rows = (indir.size() + limit - 1) / limit;
     for (size_t row = 0; row < rows; row++) {
         for (int col = 0; col < limit; col++) {
             if (index < indir.size()) {
                 std::cout << std::left << std::setw(control) << indir[index];
             }
-            if (!flags.r) {index++;} else {index--;}
+            index++;
         }
         std::cout << endl;
     }

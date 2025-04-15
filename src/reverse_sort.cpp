@@ -13,11 +13,9 @@ void reverse(std::vector<std::string>& array)
 {
     std::vector<std::string> decoy = array;
     size_t re = array.size() - 1;
-    int i = 0;
 
-    for(size_t j = 0; j != array.size() - 1; j++){
+    for(size_t j = 0; j != array.size(); j++){
         array[j] = decoy[re];
         re--;
-        i++;
     }
 }

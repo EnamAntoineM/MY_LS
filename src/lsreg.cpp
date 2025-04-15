@@ -27,7 +27,7 @@ void f_or_d (std::vector<std::string> parameter, std::vector<std::string> &files
     }
 }
 
-void ls_files(std::vector<std::string> files, flag flags)
+void ls_files(std::vector<std::string> files, std::vector<std::string> directories, flag flags)
 {
     if (!files.empty()) {
         regsort(files, flags);
@@ -43,7 +43,7 @@ void ls_files(std::vector<std::string> files, flag flags)
         if (flags.R || flags.d) {
             display(files, flags);
         }
-        cout << endl;
+        if (!directories.empty()) cout << endl;
     }
 }
 
@@ -55,13 +55,17 @@ void sort_it(size_t i, std::vector<std::string> &content, std::vector<std::strin
     copy = content;
     if (flags.t) {
         tflags = get_file_path(copy, parameter[i]);
-        stime(content, copy); 
+        stime(content, copy);
     }
     if (flags.r) {
         reverse(content);
     }
 }
 
+void ls_dl(std::vector<std::string> &parameter)
+{
+    info(parameter, true);
+}
 int my_ls_a(std::vector<std::string> parameter, flag flags)
 {
     struct dirent *rep = NULL;
@@ -74,7 +78,7 @@ int my_ls_a(std::vector<std::string> parameter, flag flags)
     std::vector<std::string> copy;
 
     f_or_d(parameter, files, directories);
-    ls_files(files, flags);
+    ls_files(files, directories, flags);
     for (size_t i = 0; i < directories.size(); i++) {
         r = opendir(directories[i].c_str());
         rep = readdir(r);
@@ -115,7 +119,6 @@ int my_ls(std::vector<std::string> parameter, flag flags)
 {
     struct dirent *rep = NULL;
     DIR *r = NULL;
-    struct stat type;
     std::vector<std::string> files;
     std::vector<std::string> directories;
     std::vector<std::string> content;
@@ -124,7 +127,7 @@ int my_ls(std::vector<std::string> parameter, flag flags)
 
     if (flags.a) my_ls_a(parameter, flags);
     f_or_d(parameter, files, directories);
-    ls_files(files, flags);
+    ls_files(files, directories, flags);
     for (size_t i = 0; i < directories.size(); i++) {
         r = opendir(directories[i].c_str());
         rep = readdir(r);
@@ -134,14 +137,19 @@ int my_ls(std::vector<std::string> parameter, flag flags)
         }
         closedir(r);
         sort_it(i, content, parameter, tflags, flags);
-        if (flags.d && !flags.l &&flags.R) {
+        if (flags.d && flags.l || flags.R){
+            info(parameter, true);
+            exit(0);
+        }
+        if (flags.d && !flags.l || flags.R) {
             display(directories, flags);
+            exit(0);
         }
         if (flags.l) {
             if (directories.size() > 1) cout << directories[i] << endl;
             lflag = get_file_path(content, directories[i]);
             info(lflag, false);
-            printf("\n");
+            if (directories.size() > 1) cout << directories[i] << endl;
             lflag.clear();
             content.clear();
         }
@@ -150,7 +158,7 @@ int my_ls(std::vector<std::string> parameter, flag flags)
             recursive(content, directories, i, flags);
             content.clear();
         }
-        if (!flags.t && !flags.r && !flags.l && !flags.R && !flags.d) {
+        if (!flags.l && !flags.R && !flags.d) {
             if (parameter.size() > 1 || !files.empty()) cout << directories[i] << endl;
             display(content, flags);
         }
