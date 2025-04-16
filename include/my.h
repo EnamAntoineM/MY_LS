@@ -20,7 +20,7 @@
     void reverse(std::vector<std::string>& array);
     void info(std::vector<std::string> indir, bool total);
     void stime(std::vector<std::string>& files, std::vector<std::string> copy);
-    void display(std::vector<std::string> indir, flag flags);
+    void display(std::vector<std::string> indir);
     void regsort1(std::vector<std::string>& files, flag flags);
     void recursive(std::vector<std::string> filelist, std::vector<std::string> path, int i, flag flags);
     std::vector<std::string> get_file_path(std::vector<std::string>& file, std::string path);
@@ -39,4 +39,5 @@
     std::vector<std::string> fpermissions(std::vector<std::string>& f_info, struct stat file, int i);
     std::vector<std::string> others(std::vector<std::string>& f_info, struct stat file, int i);
     void name(std::vector<std::string>& f_info, int i, std::vector<std::string> indir, bool& total);
+    void sort_it(size_t i, std::vector<std::string> &content, std::vector<std::string> &parameter, std::vector<std::string> &tflags, flag flags);
 #endif

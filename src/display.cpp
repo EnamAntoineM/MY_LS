@@ -16,7 +16,7 @@ void simple_print(std::vector<std::string> to_print)
     }
 }
 
-void display(std::vector<std::string> indir, flag flags)
+void display(std::vector<std::string> indir)
 {
     int control = longstring(indir);
     int limit = step(control);

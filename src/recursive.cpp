@@ -9,6 +9,22 @@
 
 #include "../include/my.h"
 
+void sort_it_for_R(std::vector<std::string> &content, std::string &parameter, std::vector<std::string> &tflags, flag flags)
+{
+    std::vector<std::string> copy;
+
+    regsort(content, flags);
+    copy = content;
+    if (flags.t) {
+        tflags = get_file_path(copy, parameter);
+        stime(content, copy);
+        tflags.clear();
+    }
+    if (flags.r) {
+        reverse(content);
+    }
+}
+
 void get_dir_content(std::string parameter, flag flags)
 {
     struct dirent *rep = NULL;
@@ -35,17 +51,14 @@ void get_dir_content(std::string parameter, flag flags)
             }
         }
         closedir(r);
-        regsort(content, flags);
-        copy = content;
-        if (flags.t) {
-            tflags = get_file_path(copy, parameter);
-            stime(content, copy);
-            display(content, flags);
-        } else {display(content, flags);}
+        sort_it_for_R(content, parameter, tflags, flags);
         if (flags.l) {
             cout << parameter << endl;
             lflag = get_file_path(content, parameter);
             info(lflag, false);
+            cout << endl;
+            lflag.clear();
+            content.clear();
         }
         std::cout << endl;
         lcontinue = get_dir2(content, parameter);
