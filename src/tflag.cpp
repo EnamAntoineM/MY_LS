@@ -9,7 +9,7 @@
 
 #include "../include/my.h"
 
-void stime(std::vector<std::string>& files, std::vector<std::string> copy)
+void stime(std::vector<std::string>& files, const std::vector<std::string> copy)
 {
     std::vector<int> indices(files.size());
     std::vector<std::string> sortedFiles(files.size());
@@ -21,6 +21,9 @@ void stime(std::vector<std::string>& files, std::vector<std::string> copy)
         i++;
     }
     std::sort(indices.begin(), indices.end(), [&](int a, int b) {
+        if (a >= (int)copy.size() || b >= (int)copy.size()) {
+            return false;
+        }
         lstat(copy[a].c_str(), &time1);
         lstat(copy[b].c_str(), &time2);
         return time1.st_mtime > time2.st_mtime;
@@ -30,5 +33,3 @@ void stime(std::vector<std::string>& files, std::vector<std::string> copy)
     }
     files = sortedFiles;
 }
-
-

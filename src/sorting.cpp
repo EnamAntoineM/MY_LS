@@ -42,6 +42,9 @@ void regsort(std::vector<std::string>& files, flag flags)
             i++;
     }
     std::sort(indices.begin(), indices.end(), [&](int a, int b) {
+        if (a >= (int)files.size() || b >= (int)files.size()) {
+            return false;
+        }
         return lowerFiles[a] < lowerFiles[b];
     });
     std::vector<std::string> sortedFiles(files.size());

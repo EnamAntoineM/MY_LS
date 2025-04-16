@@ -39,5 +39,4 @@
     std::vector<std::string> fpermissions(std::vector<std::string>& f_info, struct stat file, int i);
     std::vector<std::string> others(std::vector<std::string>& f_info, struct stat file, int i);
     void name(std::vector<std::string>& f_info, int i, std::vector<std::string> indir, bool& total);
-    void sort_it(size_t i, std::vector<std::string> &content, std::vector<std::string> &parameter, std::vector<std::string> &tflags, flag flags);
 #endif

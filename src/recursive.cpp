@@ -34,7 +34,6 @@ void get_dir_content(std::string parameter, flag flags)
     std::vector<std::string> lcontinue;
     std::vector<std::string> lflag;
     std::vector<std::string> tflags;
-    std::vector<std::string> copy;
 
     lstat(parameter.c_str(), &type);
     if(lstat(parameter.c_str(), &type) == -1){
@@ -53,15 +52,15 @@ void get_dir_content(std::string parameter, flag flags)
         closedir(r);
         sort_it_for_R(content, parameter, tflags, flags);
         if (flags.l) {
-            cout << parameter << endl;
             lflag = get_file_path(content, parameter);
             info(lflag, false);
-            cout << endl;
             lflag.clear();
-            content.clear();
         }
-        std::cout << endl;
-        lcontinue = get_dir2(content, parameter);
+        if (!flags.l) {
+            display(content);
+            lcontinue = get_dir2(content, parameter);
+        } else {lcontinue = content;}
+
         if (!lcontinue.empty()) {
             for (size_t i = 0; i < lcontinue.size(); i++) {
                 if (lstat(lcontinue[i].c_str(), &type) == -1) {

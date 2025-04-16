@@ -47,7 +47,7 @@ void ls_files(std::vector<std::string> files, std::vector<std::string> directori
     }
 }
 
-void sort_it(size_t i, std::vector<std::string> &content, std::vector<std::string> &parameter, std::vector<std::string> &tflags, flag flags)
+void sort_it(size_t i, std::vector<std::string> &content, std::vector<std::string> parameter, std::vector<std::string> tflags, flag flags)
 {
     std::vector<std::string> copy;
 
@@ -104,24 +104,23 @@ int my_ls(std::vector<std::string> parameter, flag flags)
         if (flags.d){
             lsd_n_co(parameter, flags);
         }
-        if (flags.l) {
+        if (flags.l && !flags.R) {
             if (directories.size() > 1) cout << directories[i] << endl;
             lflag = get_file_path(content, directories[i]);
             info(lflag, false);
-            if (directories.size() > 1) cout << directories[i] << endl;
-            lflag.clear();
-            content.clear();
+            if (directories.size() > 1) cout << endl;
         }
         if (flags.R) {
             display(content);
             recursive(content, directories, i, flags);
-            content.clear();
         }
         if (!flags.l && !flags.R && !flags.d) {
             if (parameter.size() > 1 || !files.empty()) cout << directories[i] << endl;
             display(content);
+            if (directories.size() > 1 && i != directories.size()) cout << endl;
         }
-        tflags.clear();
+        lflag.clear();
+        content.clear();
     }
     return 0;
 }
