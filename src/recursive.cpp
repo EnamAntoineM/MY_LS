@@ -9,7 +9,7 @@
 
 #include "../include/my.h"
 
-void sort_it_for_R(std::vector<std::string> &content, std::string &parameter, std::vector<std::string> &tflags, flag flags)
+void sort_it_for_R(std::vector<std::string> &content, std::string &parameter, std::vector<std::string> &tflags, flag &flags)
 {
     std::vector<std::string> copy;
 
@@ -25,7 +25,7 @@ void sort_it_for_R(std::vector<std::string> &content, std::string &parameter, st
     }
 }
 
-void get_dir_content(std::string parameter, flag flags)
+void get_dir_content(std::string parameter, flag &flags)
 {
     struct dirent *rep = NULL;
     DIR *r = NULL;
@@ -41,7 +41,7 @@ void get_dir_content(std::string parameter, flag flags)
     } else if (S_ISDIR(type.st_mode)) {
         r = opendir(parameter.c_str());
         if (r == NULL) {
-            perror("my_ls");
+            perror(("my_ls: Cannot open " + parameter).c_str());
         } else {
             rep = readdir(r);
             while(rep != NULL){
@@ -74,7 +74,7 @@ void get_dir_content(std::string parameter, flag flags)
     }
 }
 
-void recursive(std::vector<std::string> filelist, std::vector<std::string> path, int i, flag flags)
+void recursive(std::vector<std::string> filelist, std::vector<std::string> path, int i, flag &flags)
 {
     std::vector<std::string> directories = get_dir1(filelist, path, i);
     struct stat type;

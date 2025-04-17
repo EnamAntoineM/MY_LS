@@ -14,15 +14,15 @@ void f_or_d (std::vector<std::string> parameter, std::vector<std::string> &files
     struct stat type;
 
     for (size_t i = 0; i < parameter.size(); i++) {
-        if (lstat(parameter[i].c_str(), &type) != -1) {
+        int ret = lstat(parameter[i].c_str(), &type);
+        if (ret == -1) {
+            perror(("my_ls: " + parameter[i]).c_str());
+        } else {
             if (S_ISDIR(type.st_mode) || S_ISLNK(type.st_mode)) {
                 directories.emplace_back(parameter[i]);
             } else {
                 files.emplace_back(parameter[i]);
             }
-        } else {
-            cout << parameter[i] << endl;
-            perror("my_ls");
         }
     }
 }
@@ -80,7 +80,7 @@ void lsd_n_co(std::vector<std::string> &parameter, flag flags)
         exit(0);
     }
 }
-int my_ls(std::vector<std::string> parameter, flag flags)
+int my_ls(std::vector<std::string> parameter, flag &flags)
 {
     struct dirent *rep = NULL;
     DIR *r = NULL;
@@ -92,8 +92,12 @@ int my_ls(std::vector<std::string> parameter, flag flags)
 
     f_or_d(parameter, files, directories);
     ls_files(files, directories, flags);
-    for (size_t i = 0; i < directories.size(); i++) {
+    for (size_t i = 0; i < directories.size() &&!directories.empty(); i++) {
         r = opendir(directories[i].c_str());
+        if (r == NULL) {
+            perror(("my_ls: Cannot open " + parameter[i]).c_str());
+            continue;
+        }
         rep = readdir(r);
         while(rep != NULL){
             content.emplace_back(rep->d_name);
