@@ -80,5 +80,4 @@ The project includes a creative backstory about a character named Aki who discov
 
 ## For More Details
 
-For a detailed description of the project, including the full lore and specifications, refer to the [B-PSU-100_my_ls.pdf](https://github.com/user-attachments/files/19797728/B-PSU-100_my_ls.pdf)
-).
+For a detailed description of the project, including the full lore and specifications, refer to the [B-PSU-100_my_ls.pdf](https://github.com/user-attachments/files/19797728/B-PSU-100_my_ls.pdf).
