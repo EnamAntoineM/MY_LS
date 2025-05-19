@@ -9,10 +9,12 @@
 SRC     = $(wildcard *.cpp) $(shell find ./src -name '*.cpp')  # Source files in root and ./src
 OBJ     = $(SRC:.cpp=.o)                                     # Object files (updated extension from .c to .cpp)
 NAME    = my_ls                                           # Executable name
-CC      = g++                                                
-CFLAGS  = -Wall -Wextra -Werror -I./include -Wno-error  -std=c++20     # Compiler flags
+CC      = g++
+CXXFLAGS = -std=c++20 -O3 -march=native -mtune=native -flto -ffast-math \
+           -funroll-loops -fomit-frame-pointer -finline-functions \
+           -fdata-sections -ffunction-sections -Wall -Wextra -pthread -Werror -I./include -Wno-error  -std=c++20
 HEADERS = $(shell find -name '*.h')                          # Dynamically find all header files
-LDFLAGS = -lm  # Linker flags
+LDFLAGS = -lm -flto -Wl,--gc-sections -s  # Linker flags
 
 # Default target
 all: $(NAME)
@@ -23,7 +25,7 @@ $(NAME): $(OBJ)
 
 # Compile source files into object files
 %.o: %.cpp $(HEADERS)                                       # Updated from %.c to %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CXXFLAGS) -c $< -o $@
 
 # Clean targets
 clean:
